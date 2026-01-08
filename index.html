@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keresztesi István Portfólió</title>
+    <style>
+        body { font-family: "Monotype Corsiva", cursive; margin: 0; background: #000; color: #fff; text-align: center; }
+        
+        /* NAVIGÁCIÓ */
+        nav { padding: 20px; position: sticky; top: 0; background: #000; z-index: 1000; border-bottom: 1px solid #222; }
+        nav button { 
+            font-family: "Monotype Corsiva", cursive; font-size: 1.5rem; 
+            background: #222; color: #fff; border: 1px solid #777; 
+            padding: 10px 25px; margin: 5px; cursor: pointer; border-radius: 4px; transition: 0.3s;
+        }
+        nav button:hover { background: #fff; color: #000; }
+
+        /* SZEKCIÓK */
+        .section { display: none; padding: 20px; max-width: 1200px; margin: 0 auto; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* GALÉRIA */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 20px 0; }
+        .card { height: 400px; background: #111; border: 1px solid #222; overflow: hidden; cursor: pointer; }
+        .card img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
+        .card:hover img { transform: scale(1.05); }
+
+        /* NAGYÍTÁS (LIGHTBOX) */
+        #lightbox {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 2000; align-items: center; justify-content: center;
+        }
+        #lightbox img { max-width: 90%; max-height: 90%; border: 2px solid #fff; }
+
+        /* RÓLAM SZEKCIÓ */
+        .about-box { display: flex; gap: 40px; flex-wrap: wrap; text-align: left; align-items: flex-start; margin-top: 30px; }
+        .about-img { width: 350px; height: 450px; object-fit: cover; border-radius: 10px; border: 1px solid #333; flex-shrink: 0; }
+        .about-text { flex: 1; font-size: 1.5rem; line-height: 1.6; min-width: 300px; }
+        .about-text p { margin-bottom: 15px; }
+
+        /* KAPCSOLAT */
+        .contact-card { background:#111; padding:60px; border-radius:15px; border: 1px solid #222; margin-top: 40px; }
+        .contact-card a { color:#fff; text-decoration:none; font-size:2rem; display:block; margin:20px; transition: 0.3s; }
+        .contact-card a:hover { color: #aaa; }
+
+        footer { padding: 50px; color: #444; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div style="width:70%; margin: 0 auto; padding: 20px;">
+            <img src="banner.jpg" style="width: 100%; border-radius: 5px;" alt="Banner">
+        </div>
+        <nav>
+            <button onclick="lapoz('galeria-lap')">Galéria</button>
+            <button onclick="lapoz('video-lap')">Videók</button>
+            <button onclick="lapoz('rolam-lap')">Rólam</button>
+            <button onclick="lapoz('kapcsolat-lap')">Kapcsolat</button>
+        </nav>
+    </header>
+
+    <div id="galeria-lap" class="section" style="display: block;">
+        <h2>Portrék</h2>
+        <div class="grid">
+            <div class="card" onclick="mutat(this)"><img src="portre1.jpg"></div>
+            <div class="card" onclick="mutat(this)"><img src="portre2.jpg"></div>
+            <div class="card" onclick="mutat(this)"><img src="portre3.jpg"></div>
+            <div class="card" onclick="mutat(this)"><img src="portre4.jpg"></div>
+            <div class="card" onclick="mutat(this)"><img src="portre5.jpg"></div>
+            <div class="card" onclick="mutat(this)"><img src="portre6.jpg"></div>
+            <div class="card" onclick="mutat(this)"><img src="portre7.jpg"></div>
+            <div class="card" onclick="mutat(this)"><img src="portre8.jpg"></div>
+            <div class="card" onclick="mutat(this)"><img src="portre9.jpg"></div>
+        </div>
+        <h2>Étel fotók</h2>
+        <div class="grid">
+            <div class="card" onclick="mutat(this)"><img src="etelfoto/etel1.jpg"></div>
+            <div class="card" onclick="mutat(this)"><img src="etelfoto/etel2.jpg"></div>
+            <div class="card" onclick="mutat(this)"><img src="etelfoto/etel3.jpg"></div>
+            <div class="card" onclick="mutat(this)"><img src="etelfoto/etel4.jpg"></div>
+            <div class="card" onclick="mutat(this)"><img src="etelfoto/etel5.jpg"></div>
+            <div class="card" onclick="mutat(this)"><img src="etelfoto/etel6.jpg"></div>
+            <div class="card" onclick="mutat(this)"><img src="etelfoto/etel7.jpg"></div>
+            <div class="card" onclick="mutat(this)"><img src="etelfoto/etel8.jpg"></div>
+            <div class="card" onclick="mutat(this)"><img src="etelfoto/etel9.jpg"></div>
+        </div>
+    </div>
+
+    <div id="video-lap" class="section">
+        <h2>Videók</h2>
+        <div class="grid">
+            <div class="card">
+                <video width="100%" height="100%" controls><source src="video1.mp4" type="video/mp4"></video>
+            </div>
+        </div>
+    </div>
+
+    <div id="rolam-lap" class="section">
+        <div class="about-box">
+            <img src="en.jpg" class="about-img" alt="Keresztesi István">
+            <div class="about-text">
+                <h2 style="border:none; margin:0; text-align: left;">Bemutatkozás</h2>
+                <p>Üdvözöllek! Keresztesi István vagyok, a látásmódomat az elmúlt 15 év tapasztalata formálta a kereső mögött. Fotósként és videósként abban a szerencsés helyzetben vagyok, hogy a legkülönbözőbb világokban alkothatok: ott vagyok a lagzik megismételhetetlen pillanatainál, a koncertek lüktető energiájában és a rendezvények eleganciájában.</p>
+                <p>Pályafutásom során készítettem mélyinterjúkat, ahol a történetmesélés volt a cél, és forgattam zenei klipeket, ahol a vizuális kreativitás kapott főszerepet. Legyen szó egy érzelmes esküvői filmről vagy egy dinamikus videóklipről, a célom ugyanaz: megörökíteni az őszinte pillanatot és átadni azt a hangulatot, ami az adott pillanatot különlegessé tette.</p>
+                <p><strong>Amit kínálunk:</strong></p>
+                <ul>
+                    <li>4-5 perc hosszú mozi minőségű összefoglaló klip Full HD minőségben.</li>
+                    <li>60-90 perc hosszú mozi minőségű esküvői film Full HD minőségben.</li>
+                    <li>Az összes fotó digitális hordozón, általános retusálással.</li>
+                </ul>
+                <p>Fordulj hozzánk bizalommal!<br><strong>István Keresztesi - BlueBoxDesign</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="kapcsolat-lap" class="section">
+        <div class="contact-card">
+            <h2>Kapcsolatfelvétel</h2>
+            <a href="tel:+40742901804">+40742 901 804</a>
+            <a href="mailto:stefankeresztesi@gmail.com">stefankeresztesi@gmail.com</a>
+        </div>
+    </div>
+
+    <div id="lightbox" onclick="this.style.display='none'">
+        <img id="nagy-kep" src="">
+    </div>
+
+    <footer><p>&copy; 2024 Keresztesi István</p></footer>
+
+    <script>
+        function lapoz(hova) {
+            var s = document.getElementsByClassName('section');
+            for (var i = 0; i < s.length; i++) { 
+                s[i].style.display = 'none'; 
+            }
+            document.getElementById(hova).style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        function mutat(elem) {
+            var kep = elem.getElementsByTagName('img')[0];
+            if(kep) {
+                document.getElementById('nagy-kep').src = kep.src;
+                document.getElementById('lightbox').style.display = 'flex';
+            }
+        }
+    </script>
+</body>
+</html>
