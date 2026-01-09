@@ -2,149 +2,160 @@
 <html lang="hu">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Keresztesi István Portfólió</title>
     <style>
-        body { font-family: "Monotype Corsiva", cursive; margin: 0; background: #000; color: #fff; text-align: center; }
+        body { font-family: "Monotype Corsiva", cursive, serif; margin: 0; background: #000; color: #fff; text-align: center; }
+        header { padding: 20px; }
         
-        /* NAVIGÁCIÓ */
-        nav { padding: 20px; position: sticky; top: 0; background: #000; z-index: 1000; border-bottom: 1px solid #222; }
-        nav button { 
-            font-family: "Monotype Corsiva", cursive; font-size: 1.5rem; 
-            background: #222; color: #fff; border: 1px solid #777; 
-            padding: 10px 25px; margin: 5px; cursor: pointer; border-radius: 4px; transition: 0.3s;
-        }
-        nav button:hover { background: #fff; color: #000; }
+        /* MENÜ */
+        nav { padding: 15px; position: sticky; top: 0; background: #0a0a0a; z-index: 1000; border-bottom: 1px solid #333; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .nav-btn { font-family: inherit; font-size: 1.4rem; background: #1a1a1a; color: #fff; border: 1px solid #444; padding: 10px 20px; cursor: pointer; border-radius: 4px; transition: 0.3s; }
+        .nav-btn:hover { background: #fff; color: #000; }
 
-        /* SZEKCIÓK */
-        .section { display: none; padding: 20px; max-width: 1200px; margin: 0 auto; animation: fadeIn 0.5s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* OLDALAK */
+        .page { display: none; padding: 20px; max-width: 1200px; margin: 0 auto; }
+        #galeria-lap { display: block; }
 
-        /* GALÉRIA */
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 20px 0; }
-        .card { height: 400px; background: #111; border: 1px solid #222; overflow: hidden; cursor: pointer; }
-        .card img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
-        .card:hover img { transform: scale(1.05); }
+        
+        /* KÁRTYÁK */
+        .card { width: 100%; height: 350px; border: 1px solid #222; overflow: hidden; cursor: pointer; background: #050505; }
+        .card img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .video-card { width: 100%; aspect-ratio: 16 / 9; border: 1px solid #222; border-radius: 8px; overflow: hidden; cursor: pointer; background: #111; position: relative; }
+        /* A videó poster képe fogja kitölteni, a video tag poster attribútumát használjuk */
+        .video-card video { width: 100%; height: 100%; object-fit: cover; pointer-events: none; } 
+        /* Lejátszás ikon, ami a poster kép felett van */
+        .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; color: white; opacity: 0.8; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
 
-        /* NAGYÍTÁS (LIGHTBOX) */
-        #lightbox {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 2000; align-items: center; justify-content: center;
-        }
-        #lightbox img { max-width: 90%; max-height: 90%; border: 2px solid #fff; }
+        /* RÓLAM */
+        .profile-img { width: 350px; height: 450px; object-fit: cover; border-radius: 10px; border: 1px solid #333; display: block; margin: 0 auto; }
+        .text-side { flex: 1; min-width: 300px; text-align: left; padding: 0 20px; line-height: 1.6; font-size: 1.2rem; }
 
-        /* RÓLAM SZEKCIÓ */
-        .about-box { display: flex; gap: 40px; flex-wrap: wrap; text-align: left; align-items: flex-start; margin-top: 30px; }
-        .about-img { width: 350px; height: 450px; object-fit: cover; border-radius: 10px; border: 1px solid #333; flex-shrink: 0; }
-        .about-text { flex: 1; font-size: 1.5rem; line-height: 1.6; min-width: 300px; }
-        .about-text p { margin-bottom: 15px; }
-
-        /* KAPCSOLAT */
-        .contact-card { background:#111; padding:60px; border-radius:15px; border: 1px solid #222; margin-top: 40px; }
-        .contact-card a { color:#fff; text-decoration:none; font-size:2rem; display:block; margin:20px; transition: 0.3s; }
-        .contact-card a:hover { color: #aaa; }
-
-        footer { padding: 50px; color: #444; }
+        /* NAGYÍTÓ */
+        #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; align-items: center; justify-content: center; }
+        #lightbox img, #lightbox video { max-width: 90%; max-height: 80%; border: 2px solid #fff; }
+        .close-x { position: absolute; top: 20px; right: 30px; font-size: 4rem; color: #fff; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <header>
-        <div style="width:70%; margin: 0 auto; padding: 20px;">
-            <img src="banner.jpg" style="width: 100%; border-radius: 5px;" alt="Banner">
-        </div>
-        <nav>
-            <button onclick="lapoz('galeria-lap')">Galéria</button>
-            <button onclick="lapoz('video-lap')">Videók</button>
-            <button onclick="lapoz('rolam-lap')">Rólam</button>
-            <button onclick="lapoz('kapcsolat-lap')">Kapcsolat</button>
-        </nav>
-    </header>
+    <header><img src="banner.jpg" style="width: 70%; max-width: 850px;"></header>
 
-    <div id="galeria-lap" class="section" style="display: block;">
+    <nav>
+        <button class="nav-btn" onclick="lapotValt('galeria-lap')">Galéria</button>
+        <button class="nav-btn" onclick="lapotValt('eskuvo-lap')">Esküvő</button>
+        <button class="nav-btn" onclick="lapotValt('rolam-lap')">Rólam</button>
+        <button class="nav-btn" onclick="lapotValt('kapcsolat-lap')">Kapcsolat</button>
+    </nav>
+
+    <div id="galeria-lap" class="page">
         <h2>Portrék</h2>
         <div class="grid">
-            <div class="card" onclick="mutat(this)"><img src="portre1.jpg"></div>
-            <div class="card" onclick="mutat(this)"><img src="portre2.jpg"></div>
-            <div class="card" onclick="mutat(this)"><img src="portre3.jpg"></div>
-            <div class="card" onclick="mutat(this)"><img src="portre4.jpg"></div>
-            <div class="card" onclick="mutat(this)"><img src="portre5.jpg"></div>
-            <div class="card" onclick="mutat(this)"><img src="portre6.jpg"></div>
-            <div class="card" onclick="mutat(this)"><img src="portre7.jpg"></div>
-            <div class="card" onclick="mutat(this)"><img src="portre8.jpg"></div>
-            <div class="card" onclick="mutat(this)"><img src="portre9.jpg"></div>
+            <div class="card" onclick="mutasd(this, 'img')"><img src="portre1.jpg"></div>
+            <div class="card" onclick="mutasd(this, 'img')"><img src="portre2.jpg"></div>
+            <div class="card" onclick="mutasd(this, 'img')"><img src="portre3.jpg"></div>
+            <div class="card" onclick="mutasd(this, 'img')"><img src="portre4.jpg"></div>
+            <div class="card" onclick="mutasd(this, 'img')"><img src="portre5.jpg"></div>
+            <div class="card" onclick="mutasd(this, 'img')"><img src="portre6.jpg"></div>
+            <div class="card" onclick="mutasd(this, 'img')"><img src="portre7.jpg"></div>
+            <div class="card" onclick="mutasd(this, 'img')"><img src="portre8.jpg"></div>
+            <div class="card" onclick="mutasd(this, 'img')"><img src="portre9.jpg"></div>
         </div>
         <h2>Étel fotók</h2>
         <div class="grid">
-            <div class="card" onclick="mutat(this)"><img src="etelfoto/etel1.jpg"></div>
-            <div class="card" onclick="mutat(this)"><img src="etelfoto/etel2.jpg"></div>
-            <div class="card" onclick="mutat(this)"><img src="etelfoto/etel3.jpg"></div>
-            <div class="card" onclick="mutat(this)"><img src="etelfoto/etel4.jpg"></div>
-            <div class="card" onclick="mutat(this)"><img src="etelfoto/etel5.jpg"></div>
-            <div class="card" onclick="mutat(this)"><img src="etelfoto/etel6.jpg"></div>
-            <div class="card" onclick="mutat(this)"><img src="etelfoto/etel7.jpg"></div>
-            <div class="card" onclick="mutat(this)"><img src="etelfoto/etel8.jpg"></div>
-            <div class="card" onclick="mutat(this)"><img src="etelfoto/etel9.jpg"></div>
+            <div class="card" onclick="mutasd(this, 'img')"><img src="etelfoto/etel1.jpg"></div>
+            <div class="card" onclick="mutasd(this, 'img')"><img src="etelfoto/etel2.jpg"></div>
+            <div class="card" onclick="mutasd(this, 'img')"><img src="etelfoto/etel3.jpg"></div>
+            <div class="card" onclick="mutasd(this, 'img')"><img src="etelfoto/etel4.jpg"></div>
+            <div class="card" onclick="mutasd(this, 'img')"><img src="etelfoto/etel5.jpg"></div>
+            <div class="card" onclick="mutasd(this, 'img')"><img src="etelfoto/etel6.jpg"></div>
+            <div class="card" onclick="mutasd(this, 'img')"><img src="etelfoto/etel7.jpg"></div>
+            <div class="card" onclick="mutasd(this, 'img')"><img src="etelfoto/etel8.jpg"></div>
+            <div class="card" onclick="mutasd(this, 'img')"><img src="etelfoto/etel9.jpg"></div>
         </div>
     </div>
 
-    <div id="video-lap" class="section">
-        <h2>Videók</h2>
+    <div id="eskuvo-lap" class="page">
+        <h2>Esküvői filmek</h2>
         <div class="grid">
-            <div class="card">
-                <video width="100%" height="100%" controls><source src="video1.mp4" type="video/mp4"></video>
-            </div>
+            <div class="video-card" onclick="mutasd('video1.mp4', 'vid')"><video poster="video1_poster.jpg"><source src="video1.mp4"></video><div class="play-icon">▶</div></div>
+            <div class="video-card" onclick="mutasd('video2.mp4', 'vid')"><video poster="video2_poster.jpg"><source src="video2.mp4"></video><div class="play-icon">▶</div></div>
+            <div class="video-card" onclick="mutasd('video3.mp4', 'vid')"><video poster="video3_poster.jpg"><source src="video3.mp4"></video><div class="play-icon">▶</div></div>
+            <div class="video-card" onclick="mutasd('video4.mp4', 'vid')"><video poster="video4_poster.jpg"><source src="video4.mp4"></video><div class="play-icon">▶</div></div>
+            <div class="video-card" onclick="mutasd('video5.mp4', 'vid')"><video poster="video5_poster.jpg"><source src="video5.mp4"></video><div class="play-icon">▶</div></div>
+            <div class="video-card" onclick="mutasd('video6.mp4', 'vid')"><video poster="video6_poster.jpg"><source src="video6.mp4"></video><div class="play-icon">▶</div></div>
+            <div class="video-card" onclick="mutasd('video7.mp4', 'vid')"><video poster="video7_poster.jpg"><source src="video7.mp4"></video><div class="play-icon">▶</div></div>
+            <div class="video-card" onclick="mutasd('video8.mp4', 'vid')"><video poster="video8_poster.jpg"><source src="video8.mp4"></video><div class="play-icon">▶</div></div>
+            <div class="video-card" onclick="mutasd('video9.mp4', 'vid')"><video poster="video9_poster.jpg"><source src="video9.mp4"></video><div class="play-icon">▶</div></div>
+            <div class="video-card" onclick="mutasd('video10.mp4', 'vid')"><video poster="video10_poster.jpg"><source src="video10.mp4"></video><div class="play-icon">▶</div></div>
+            <div class="video-card" onclick="mutasd('video11.mp4', 'vid')"><video poster="video11_poster.jpg"><source src="video11.mp4"></video><div class="play-icon">▶</div></div>
+<div class="video-card" onclick="mutasd('video12.mp4', 'vid')"><video poster="video12_poster.jpg"><source src="video12.mp4"></video><div class="play-icon">▶</div></div>
         </div>
     </div>
 
-    <div id="rolam-lap" class="section">
-        <div class="about-box">
-            <img src="en.jpg" class="about-img" alt="Keresztesi István">
-            <div class="about-text">
-                <h2 style="border:none; margin:0; text-align: left;">Bemutatkozás</h2>
-                <p>Üdvözöllek! Keresztesi István vagyok, a látásmódomat az elmúlt 15 év tapasztalata formálta a kereső mögött. Fotósként és videósként abban a szerencsés helyzetben vagyok, hogy a legkülönbözőbb világokban alkothatok: ott vagyok a lagzik megismételhetetlen pillanatainál, a koncertek lüktető energiájában és a rendezvények eleganciájában.</p>
-                <p>Pályafutásom során készítettem mélyinterjúkat, ahol a történetmesélés volt a cél, és forgattam zenei klipeket, ahol a vizuális kreativitás kapott főszerepet. Legyen szó egy érzelmes esküvői filmről vagy egy dinamikus videóklipről, a célom ugyanaz: megörökíteni az őszinte pillanatot és átadni azt a hangulatot, ami az adott pillanatot különlegessé tette.</p>
-                <p><strong>Amit kínálunk:</strong></p>
+    <div id="rolam-lap" class="page">
+        <div style="display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+            <img src="en.jpg" class="profile-img">
+            <div class="text-side">
+                <h2 style="margin-top: 0;">Bemutatkozás</h2>
+                <p>Üdvözöllek! Keresztesi István vagyok, a látásmódomat az elmúlt 15 év tapasztalata formálta a kereső mögött. Fotósként és videósként a legkülönbözőbb világokban alkothatok: ott vagyok a lagzik megismételhetetlen pillanatainál és a rendezvények eleganciájában.</p>
+                <p>Legyen szó egy érzelmes esküvői filmről vagy egy dinamikus videóklipről, a célom ugyanaz: megörökíteni az őszinte pillanatot és átadni annak hangulatát.</p>
+                <h3>Amit kínálunk:</h3>
                 <ul>
-                    <li>4-5 perc hosszú mozi minőségű összefoglaló klip Full HD minőségben.</li>
-                    <li>60-90 perc hosszú mozi minőségű esküvői film Full HD minőségben.</li>
-                    <li>Az összes fotó digitális hordozón, általános retusálással.</li>
+                    <li>4-5 perc hosszú mozi minőségű összefoglaló klip.</li>
+                    <li>60-90 perc hosszú esküvői film Full HD minőségben.</li>
+                    <li>Az összes fotó digitális hordozón, retusálással.</li>
                 </ul>
-                <p>Fordulj hozzánk bizalommal!<br><strong>István Keresztesi - BlueBoxDesign</strong></p>
+                <p><strong>Fordulj hozzánk bizalommal!</strong></p>
+                <p><em>István Keresztesi - BlueBoxDesign</em></p>
             </div>
         </div>
     </div>
 
-    <div id="kapcsolat-lap" class="section">
-        <div class="contact-card">
-            <h2>Kapcsolatfelvétel</h2>
-            <a href="tel:+40742901804">+40742 901 804</a>
-            <a href="mailto:stefankeresztesi@gmail.com">stefankeresztesi@gmail.com</a>
+    <div id="kapcsolat-lap" class="page">
+        <div style="background:#111; padding:50px; border-radius:15px; border: 1px solid #333; display: inline-block;">
+            <h2>Kapcsolat</h2>
+            <p style="font-size: 2.5rem; margin: 10px 0;">+40 742 901 804</p>
+<div id="sfc23d3rwyj8sz9garauta58zr4w6l49qm9"></div><script type="text/javascript" src="https://counter1.optistats.ovh/private/counter.js?c=23d3rwyj8sz9garauta58zr4w6l49qm9&down=async" async></script><noscript><a href="https://www.freecounterstat.com" title="website counter"><img src="https://counter1.optistats.ovh/private/freecounterstat.php?c=23d3rwyj8sz9garauta58zr4w6l49qm9" border="0" title="website counter" alt="website counter"></a></noscript>
+            <p>stefankeresztesi@gmail.com</p>
         </div>
     </div>
 
-    <div id="lightbox" onclick="this.style.display='none'">
-        <img id="nagy-kep" src="">
+    <div id="lightbox" onclick="bezar()">
+        <span class="close-x">&times;</span>
+        <img id="nagy-kep" style="display:none;">
+        <video id="nagy-video" controls style="display:none;"></video>
     </div>
-
-    <footer><p>&copy; 2024 Keresztesi István</p></footer>
 
     <script>
-        function lapoz(hova) {
-            var s = document.getElementsByClassName('section');
-            for (var i = 0; i < s.length; i++) { 
-                s[i].style.display = 'none'; 
-            }
-            document.getElementById(hova).style.display = 'block';
-            window.scrollTo(0, 0);
+        function lapotValt(id) {
+            var lapok = document.getElementsByClassName('page');
+            for (var i = 0; i < lapok.length; i++) { lapok[i].style.display = 'none'; }
+            document.getElementById(id).style.display = 'block';
+            window.scrollTo(0,0);
         }
 
-        function mutat(elem) {
-            var kep = elem.getElementsByTagName('img')[0];
-            if(kep) {
-                document.getElementById('nagy-kep').src = kep.src;
-                document.getElementById('lightbox').style.display = 'flex';
+        function mutasd(forras, tipus) {
+            var lb = document.getElementById('lightbox');
+            var img = document.getElementById('nagy-kep');
+            var vid = document.getElementById('nagy-video');
+            if (tipus === 'img') {
+                img.src = forras.querySelector('img').src;
+                img.style.display = 'block'; vid.style.display = 'none';
+            } else {
+                vid.src = forras; // Itt kapja meg a videó forrását
+                vid.style.display = 'block'; img.style.display = 'none';
+                vid.play();
             }
+            lb.style.display = 'flex';
+        }
+
+        function bezar() {
+            var lb = document.getElementById('lightbox');
+            var vid = document.getElementById('nagy-video');
+            lb.style.display = 'none';
+            vid.pause(); vid.src = "";
         }
     </script>
 </body>
